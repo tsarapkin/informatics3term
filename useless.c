@@ -76,9 +76,6 @@ void GetTask(FILE *file, Task **tasks, int num)
 {
     int i, k;
     char *delimiters = " \n";
-    /*
-     * +1?
-     */
     char **pointersArg = (char **)malloc((MaxNumArg + 1) * sizeof(char *) + 1);
 
     for (i = 0; i < num; i++)
