@@ -18,6 +18,7 @@ typedef struct Task
     int sleepTime;
 } Task;
 
+int GetNum ();
 void Split(char *string, char *delimiters, char ***tokens, int *countTokens);
 void GetTask(FILE *fin, Task **tasks, int num);
 void CompleteTasks(Task **tasks, int num);
@@ -25,7 +26,7 @@ void CompleteTasks(Task **tasks, int num);
 int main()
 {
     int i;
-    int numCmd;
+    int numCmd = GetNum ();
 
     Task *tasks =(Task *) malloc(MaxNumTasks * sizeof(Task) + 1);
     FILE *fin = fopen("input.txt", "r");
@@ -33,9 +34,6 @@ int main()
 
     fgets(c, MaxLenTasks, fin);
     numCmd = atoi(c);
-
-    GetTask(fin, &tasks, numCmd);
-    CompleteTasks(&tasks, numCmd);
 
     for (i = 0; i < numCmd; i++)
     {
@@ -118,4 +116,17 @@ void CompleteTasks(Task **tasks, int num)
     {
         pid = wait(&id);
     }
+}
+int GetNum ()
+{
+    int num = 0;
+    FILE *fin = fopen("input.txt", "r");
+    int c;
+    while ((c = fgetc(fin)) != EOF)
+    {
+        if ((c == '\0')||(c =='\n'))
+            num++;
+    }
+    fclose(fin);
+    return num;
 }
