@@ -22,6 +22,7 @@ int GetNum ();
 void Split(char *string, char *delimiters, char ***tokens, int *countTokens);
 void GetTask(FILE *fin, Task **tasks, int num);
 void CompleteTasks(Task **tasks, int num);
+void Plotnic(Task **tasks, int numCmd);
 
 int main()
 {
@@ -36,6 +37,7 @@ int main()
     //numCmd = atoi(c);
 
     GetTask(fin, &tasks, numCmd);
+    Plotnic(&tasks, numCmd);
     CompleteTasks(&tasks, numCmd);
 
     for (i = 0; i < numCmd; i++)
@@ -120,6 +122,7 @@ void CompleteTasks(Task **tasks, int num)
         pid = wait(&id);
     }
 }
+
 int GetNum ()
 {
     int num = 0;
@@ -132,4 +135,17 @@ int GetNum ()
     }
     fclose(fin);
     return num;
+}
+
+void Plotnic(Task **tasks, int numCmd)
+{
+    int i;
+    for (i = 0; i < numCmd; i++)
+    {
+        char * str;
+        while ((str = (strstr( (*tasks)[i].argCmd[0], "/" ))) != NULL)
+        {
+            (*tasks)[i].argCmd[0] = (str + 1);
+        }
+    }
 }
